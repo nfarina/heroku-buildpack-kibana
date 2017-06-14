@@ -57,6 +57,14 @@ fi
 
 $extract $CACHE_DIR/$KIBANA_PACKAGE
 
+cat >> ${KIBANA_DIR}/config/kibana.yml << 'EOF'
+xpack.reporting.enabled: false
+xpack.monitoring.enabled: false
+xpack.ml.enabled: false
+xpack.graph.enabled: false
+xpack.watcher.enabled: false
+EOF
+
 echo "Installing XPACK ..."
 ${KIBANA_DIR}/bin/kibana-plugin install x-pack
 

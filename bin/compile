@@ -57,5 +57,9 @@ fi
 
 $extract $CACHE_DIR/$KIBANA_PACKAGE
 
+echo "Installing XPACK ..."
+
+./$KIBANA_DIR/bin/kibana-plugin install x-pack
+
 echo "Exporting PATH" | indent
 echo 'export PATH="$PATH:'${KIBANA_DIR##*/}'/bin"' > $INIT_SCRIPT

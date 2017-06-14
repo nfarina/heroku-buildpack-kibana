@@ -12,6 +12,7 @@ INIT_SCRIPT="$BUILD_DIR/.profile.d/kibana.sh"
 
 if [ -f "$ENV_DIR/ELASTICSEARCH_URL" ]; then
   ELASTICSEARCH_URL="$(cat $ENV_DIR/ELASTICSEARCH_URL)"
+  echo "-----> Configuing ELASTICSEARCH_URL ..."
 elif [ -f "$ENV_DIR/BONSAI_URL" ]; then
   ELASTICSEARCH_URL="$(cat $ENV_DIR/BONSAI_URL):443"
 else
@@ -26,6 +27,7 @@ fi
 
 if [ -f "$ENV_DIR/KIBANA_INDEX" ]; then
   KIBANA_INDEX=$(cat $ENV_DIR/KIBANA_INDEX)
+  echo "-----> Configuring KIBANA_INDEX ..."
 else
   KIBANA_INDEX=".kibana"
 fi
@@ -48,9 +50,6 @@ mkdir="mkdir -p"
 download="curl -sLO"
 extract="$tar -C $BUILD_DIR --wildcards -f"
 verify="sha1sum --check --warn"
-configure_url='sed -i s/^\x23\x20\(elasticsearch.url:\x20\).\{1,\}/\1"'$(echo $ELASTICSEARCH_URL | sed 's/\//\\\//g')'"/'
-configure_index='sed -i s/^\x23\x20\(kibana.index:\x20\).\{1,\}/\1"'$(echo $KIBANA_INDEX | sed 's/\//\\\//g')'"/'
-
 
 echo "-----> Installing Kibana..."
 
@@ -73,12 +72,6 @@ if [ ! -f "$CACHE_DIR/$KIBANA_PACKAGE" ]; then
 fi
 
 $extract $CACHE_DIR/$KIBANA_PACKAGE
-
-echo "-----> Configuring ELASTICSEARCH_URL"
-$configure_url $KIBANA_DIR/config/kibana.yml
-
-echo "-----> Configuring KIBANA_INDEX"
-$configure_index $KIBANA_DIR/config/kibana.yml
 
 echo "Exporting PATH" | indent
 echo 'export PATH="$PATH:'${KIBANA_DIR##*/}'/bin"' > $INIT_SCRIPT

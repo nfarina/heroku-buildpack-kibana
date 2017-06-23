@@ -76,6 +76,7 @@ echo "-----> Configuring ELASTICSEARCH_URL"
 echo "elasticsearch.url: \"$(cat $ENV_DIR/ELASTICSEARCH_URL)\"" >> ${KIBANA_DIR}/config/kibana.yml
 echo "elasticsearch.username: \"$(cat $ENV_DIR/ELASTICSEARCH_USERNAME)\"" >> ${KIBANA_DIR}/config/kibana.yml
 echo "elasticsearch.password: \"$(cat $ENV_DIR/ELASTICSEARCH_PASSWORD)\"" >> ${KIBANA_DIR}/config/kibana.yml
+echo "server.host: \"0.0.0.0\"" >> ${KIBANA_DIR}/config/kibana.yml
 
 echo "Exporting PATH" | indent
 echo 'export PATH="$PATH:'${KIBANA_DIR##*/}'/bin"' > $INIT_SCRIPT

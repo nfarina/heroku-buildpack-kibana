@@ -57,10 +57,12 @@ fi
 
 $extract $CACHE_DIR/$KIBANA_PACKAGE
 
+# Copy environment variables to kibana.yml since it doesn't seem to respect them otherwise.
+echo "elasticsearch.url: \"$ELASTICSEARCH_URL\"" >> ${KIBANA_DIR}/config/kibana.yml
+echo "elasticsearch.username: \"$ELASTICSEARCH_USERNAME\"" >> ${KIBANA_DIR}/config/kibana.yml
+echo "elasticsearch.password: \"$ELASTICSEARCH_PASSWORD\"" >> ${KIBANA_DIR}/config/kibana.yml
+
 cat >> ${KIBANA_DIR}/config/kibana.yml << 'EOF'
-elasticsearch.url: "${ELASTICSEARCH_URL}"
-elasticsearch.username: "${ELASTICSEARCH_USERNAME}"
-elasticsearch.password: "${ELASTICSEARCH_PASSWORD}"
 xpack.reporting.enabled: false
 xpack.monitoring.enabled: false
 xpack.ml.enabled: false

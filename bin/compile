@@ -58,6 +58,9 @@ fi
 $extract $CACHE_DIR/$KIBANA_PACKAGE
 
 cat >> ${KIBANA_DIR}/config/kibana.yml << 'EOF'
+elasticsearch.url: "${ELASTICSEARCH_URL}"
+elasticsearch.username: "${ELASTICSEARCH_USERNAME}"
+elasticsearch.password: "${ELASTICSEARCH_PASSWORD}"
 xpack.reporting.enabled: false
 xpack.monitoring.enabled: false
 xpack.ml.enabled: false
